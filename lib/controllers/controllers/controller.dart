@@ -15,4 +15,8 @@ class Controller extends Cubit<AppState> {
   Controller({required this.authentication, required this.database, required this.storage}) :
         super(AuthenticationState(isSignIn: true));
 
+  void updateAuthentication() {
+    if (authentication.getUser() == null) emit(AuthenticationState(isSignIn: true));
+  }
+
 }
