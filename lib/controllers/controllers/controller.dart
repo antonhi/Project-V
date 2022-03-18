@@ -6,7 +6,7 @@ import 'package:projectv/services/storage/storage.dart';
 
 import '../../services/database/database.dart';
 
-class Controller extends Cubit<State> {
+class Controller extends Cubit<AppState> {
 
   final Authentication authentication;
   final Database database;
@@ -14,5 +14,9 @@ class Controller extends Cubit<State> {
 
   Controller({required this.authentication, required this.database, required this.storage}) :
         super(AuthenticationState(isSignIn: true));
+
+  void updateAuthentication() {
+    if (authentication.getUser() == null) emit(AuthenticationState(isSignIn: true));
+  }
 
 }

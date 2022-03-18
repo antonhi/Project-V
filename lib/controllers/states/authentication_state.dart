@@ -1,6 +1,6 @@
 import 'package:projectv/controllers/states/state.dart';
 
-class AuthenticationState extends State {
+class AuthenticationState extends AppState {
 
   final bool isSignIn;
 

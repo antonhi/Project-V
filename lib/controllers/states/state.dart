@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-abstract class State extends Equatable {
+abstract class AppState extends Equatable {
 
 }
