@@ -6,7 +6,7 @@ import 'package:projectv/services/storage/storage.dart';
 
 import '../../services/database/database.dart';
 
-class Controller extends Cubit<State> {
+class Controller extends Cubit<AppState> {
 
   final Authentication authentication;
   final Database database;
