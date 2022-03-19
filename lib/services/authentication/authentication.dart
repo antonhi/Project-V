@@ -16,6 +16,7 @@ class Authentication {
     auth.userChanges().listen((user) {
       if (controller != null) {
         this.user = user;
+        controller!.updateAuthentication(null, null, null, 1);
       }
     });
   }

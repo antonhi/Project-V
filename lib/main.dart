@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:projectv/controllers/controllers/controller.dart';
 import 'package:projectv/controllers/routes/router.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle.light
+        )
       ),
       home: BlocProvider<Controller>(
         create: (context) => Controller(authentication: Authentication(), database: Database(), storage: Storage()),
