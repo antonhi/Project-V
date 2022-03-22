@@ -13,10 +13,12 @@ class Controller extends Cubit<AppState> {
   final Storage storage;
 
   Controller({required this.authentication, required this.database, required this.storage}) :
-        super(AuthenticationState(isSignIn: true));
+        super(AuthenticationState());
 
-  void updateAuthentication() {
-    if (authentication.getUser() == null) emit(AuthenticationState(isSignIn: true));
+  void toggleAuthentication() {
+    if (authentication.getUser() == null) {
+      emit(AuthenticationState());
+    }
   }
 
 }

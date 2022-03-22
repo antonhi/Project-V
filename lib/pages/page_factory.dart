@@ -6,7 +6,7 @@ import 'package:projectv/pages/page.dart';
 class PageFactory {
 
   static AppPage? getPage(AppState state) {
-    if (state is AuthenticationState)  return AuthenticationPage(isSignIn: state.isSignIn,);
+    if (state is AuthenticationState)  return AuthenticationPage();
     return null;
   }
 
