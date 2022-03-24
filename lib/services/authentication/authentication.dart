@@ -16,14 +16,14 @@ class Authentication {
     auth.userChanges().listen((user) {
       if (controller != null) {
         this.user = user;
-        controller!.toggleAuthentication();
+        user == null ? controller!.showLoginState() : controller!.showRegistrationState();
       }
     });
   }
 
   User? getUser() { return user; }
 
-  String? signIn(String email, String password) {
+  String? signIn(String? email, String? password) {
     return "Error";
   }
 

@@ -1,12 +1,19 @@
-import 'package:projectv/controllers/states/authentication_state.dart';
+import 'package:projectv/controllers/states/login_state.dart';
+import 'package:projectv/controllers/states/registration_state.dart';
 import 'package:projectv/controllers/states/state.dart';
-import 'package:projectv/pages/authentication_page.dart';
+import 'package:projectv/pages/login_page.dart';
 import 'package:projectv/pages/page.dart';
+import 'package:projectv/pages/registration_page.dart';
 
 class PageFactory {
 
   static AppPage? getPage(AppState state) {
-    if (state is AuthenticationState)  return AuthenticationPage();
+    if (state is LoginState) {
+      return const LoginPage();
+    }
+    else if (state is RegistrationState) {
+      return const RegistrationPage();
+    }
     return null;
   }
 
