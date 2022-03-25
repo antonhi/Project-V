@@ -31,9 +31,9 @@ class Authentication {
     } on FirebaseAuthException catch (e) {
       print(e.code);
       switch (e.code) {
-        case "user-not-found":
+        case 'user-not-found':
           return AppErrors.loginFailureEmail;
-        case "wrong-password":
+        case 'wrong-password':
           return AppErrors.loginFailurePassword;
       }
     } catch (e) {

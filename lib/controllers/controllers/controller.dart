@@ -12,7 +12,7 @@ class Controller extends Cubit<AppState> {
   final Authentication authentication;
   final Database database;
   final Storage storage;
-  List<AppState>? directory = [];
+  //Map<AppPage, AppState>? directory = {};
 
   Controller({required this.authentication, required this.database, required this.storage}) :
         super(LoginState());
