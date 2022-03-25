@@ -18,7 +18,7 @@ class AuthenticationErrorHandler extends ErrorHandler {
       case 5:
         return 'Registration services are currently offline';
       case 6:
-        return 'Password must be greater than 5 characters';
+        return 'Password must contain number, special character, and 10 characters';
       case 7:
         return 'Could not establish network connection';
       default:

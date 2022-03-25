@@ -1,0 +1,14 @@
+import 'package:flutter/cupertino.dart';
+import 'package:projectv/utility/sizes.dart';
+
+class StandardText extends StatelessWidget {
+  final String text;
+  final Color color;
+  const StandardText({Key? key, required this.text, required this.color}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, style: TextStyle(fontSize: AppSizes.standardTextSize,
+        fontWeight: FontWeight.normal, color: color));
+  }
+}

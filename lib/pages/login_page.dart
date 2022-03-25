@@ -80,7 +80,8 @@ class _LoginPageState extends State<LoginPage> {
                           image: null)
                     ],
                   ),
-                )
+                ),
+                const SizedBox(height: 20,)
               ],
             ),
           ),

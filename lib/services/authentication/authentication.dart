@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:projectv/controllers/controllers/controller.dart';
+import 'package:projectv/services/authentication/password.dart';
 import 'package:projectv/services/error/authentication_error_handler.dart';
 import 'package:projectv/utility/errors.dart';
 
@@ -43,6 +44,9 @@ class Authentication {
   }
 
   Future<String?> signUp(String? email, String? password, String? username) async {
+    if (!PasswordValidation.validate(password)) {
+      return AuthenticationErrorHandler().getMessage(AppErrors.registrationFailurePassword);
+    }
     try {
       await auth.createUserWithEmailAndPassword(email: email ?? '', password: password ?? '');
     } on FirebaseAuthException catch (e) {
