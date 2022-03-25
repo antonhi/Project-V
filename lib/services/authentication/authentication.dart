@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:projectv/controllers/controllers/controller.dart';
 import 'package:projectv/services/authentication/password.dart';
-import 'package:projectv/services/error/authentication_error_handler.dart';
 import 'package:projectv/utility/errors.dart';
 
 class Authentication {
@@ -33,19 +32,19 @@ class Authentication {
       print(e.code);
       switch (e.code) {
         case "user-not-found":
-          return AuthenticationErrorHandler().getMessage(AppErrors.loginFailureEmail);
+          return AppErrors.loginFailureEmail;
         case "wrong-password":
-          return AuthenticationErrorHandler().getMessage(AppErrors.loginFailurePassword);
+          return AppErrors.loginFailurePassword;
       }
     } catch (e) {
-      return AuthenticationErrorHandler().getMessage(AppErrors.loginFailure);
+      return AppErrors.loginFailure;
     }
     return null;
   }
 
   Future<String?> signUp(String? email, String? password, String? username) async {
     if (!PasswordValidation.validate(password)) {
-      return AuthenticationErrorHandler().getMessage(AppErrors.registrationFailurePassword);
+      return AppErrors.registrationFailurePassword;
     }
     try {
       await auth.createUserWithEmailAndPassword(email: email ?? '', password: password ?? '');
@@ -55,14 +54,14 @@ class Authentication {
         case 'missing-email':
         case 'email-already-in-use':
         case 'invalid-email':
-          return AuthenticationErrorHandler().getMessage(AppErrors.registrationFailureEmail);
+          return AppErrors.registrationFailureEmail;
         case 'weak-password':
-          return AuthenticationErrorHandler().getMessage(AppErrors.registrationFailurePassword);
+          return AppErrors.registrationFailurePassword;
         case 'network-request-failed':
-          return AuthenticationErrorHandler().getMessage(AppErrors.registrationFailureNetwork);
+          return AppErrors.registrationFailureNetwork;
       }
     } catch (e) {
-      return AuthenticationErrorHandler().getMessage(AppErrors.registrationFailure);
+      return AppErrors.registrationFailure;
     }
     return null;
   }
