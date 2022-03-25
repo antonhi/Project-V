@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:projectv/controllers/states/login_state.dart';
 import 'package:projectv/pages/page.dart';
 import 'package:projectv/widgets/button.dart';
+import 'package:projectv/widgets/error.dart';
 import 'package:projectv/widgets/form.dart';
 
 import '../controllers/controllers/controller.dart';
@@ -19,7 +19,7 @@ class LoginPage extends AppPage {
 
 class _LoginPageState extends State<LoginPage> {
 
-  String? email, password;
+  String? email, password, error;
   late List<TextEditingController> controllers;
 
   @override
@@ -34,14 +34,15 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
+                error == null ? const SizedBox(height: 0,) : AppError(error: error!),
                 const Image(
                   image: AssetImage("images/vividlogo.png"),
                   width: 75,
                   height: 75,
                 ),
-                SizedBox(height: 40,),
+                const SizedBox(height: 40,),
                 AppForm(title: "Log In", fields: const ["Email", "Password"], controllers: controllers),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50)
@@ -59,17 +60,24 @@ class _LoginPageState extends State<LoginPage> {
                           text: "Register",
                           width: 100,
                           height: 50,
-                          alignment: Alignment.center),
-                      AppButton(onTap: () {
-                        BlocProvider.of<Controller>(context).authentication.signIn(email, password);
+                          alignment: Alignment.center,
+                          image: null,),
+                      AppButton(onTap: () async {
+                        String? res = await BlocProvider.of<Controller>(context).authentication.signIn(email, password);
+                        if (res != null) {
+                          setState(() {
+                            error = res;
+                          });
+                        }
                       },
-                          backgroundColor: AppColors.backgroundColor,
+                          backgroundColor: AppColors.inputColor,
                           textColor: AppColors.accentColor,
                           textSize: 14,
                           text: "Submit",
-                          width: 100,
+                          width: 120,
                           height: 50,
-                          alignment: Alignment.center)
+                          alignment: Alignment.center,
+                          image: null)
                     ],
                   ),
                 )

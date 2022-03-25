@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projectv/utility/colors.dart';
 import 'package:projectv/widgets/text/standard_title_text.dart';
@@ -20,7 +19,7 @@ class AppForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           StandardTitleText(text: title ?? "", color: Colors.white,),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Wrap(
             runSpacing: 10,
             children: List.generate(fields.length, (index) {
