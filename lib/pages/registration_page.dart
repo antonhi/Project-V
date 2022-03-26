@@ -63,7 +63,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       AppButton(onTap: () {
                         BlocProvider.of<Controller>(context).showLoginState();
                       },
-                          backgroundColor: AppColors.backgroundColor,
+                          backgroundColor: AppColors.inputColor,
                           textColor: Colors.white,
                           textSize: 14,
                           text: 'Login',
@@ -111,8 +111,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           }
                         }
                       },
-                          backgroundColor: AppColors.inputColor,
-                          textColor: AppColors.accentColor,
+                          backgroundColor: AppColors.accentColor,
+                          textColor: Colors.white,
                           textSize: 14,
                           text: page == 1 ? 'Next' : 'Submit',
                           width: 100,

@@ -17,7 +17,7 @@ class Cache {
 
   void setUser(AppUser? user) {
     this.user = user;
-    print(this.user);
+    print(this.user != null ? this.user!.username : 'User is null');
   }
 
   Future<bool> refreshRecommended() async {

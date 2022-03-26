@@ -39,7 +39,7 @@ class AppUser extends Model {
     DocumentSnapshot<Map<String, dynamic>> snapshot = await database.firestore.collection('users').doc(user.uid).get();
     if (snapshot.exists && snapshot.data() != null) {
       Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-      return AppUser(username: data['username'], bio: data['bio'], posts: data['posts'], followers: data['followers']);
+      return AppUser(username: data['username'], bio: data['bio'], posts: (data['posts'] as List<dynamic>).cast<String>(), followers: (data['followers'] as List<dynamic>).cast<String>(), following: (data['following'] as List<dynamic>).cast<String>());
     }
     return null;
   }
