@@ -71,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                           alignment: Alignment.center,
                           image: null,),
                       AppButton(onTap: () async {
+                        persistTextFields();
                         String? res = await BlocProvider.of<Controller>(context).authentication.signIn(email, password);
                         if (res != null) {
                           setState(() {
@@ -105,6 +106,11 @@ class _LoginPageState extends State<LoginPage> {
     if (controllers == null || controllers!.length != 2) return;
     controllers![0].text = email ?? '';
     controllers![1].text = password ?? '';
+  }
+
+  void persistTextFields() {
+    email = controllers![0].text;
+    password = controllers![1].text;
   }
 
   void initializeControllers() {

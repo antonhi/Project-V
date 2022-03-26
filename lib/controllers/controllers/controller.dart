@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:projectv/controllers/states/feed_state.dart';
+import 'package:projectv/controllers/states/inbox_state.dart';
 import 'package:projectv/controllers/states/login_state.dart';
+import 'package:projectv/controllers/states/profile_state.dart';
 import 'package:projectv/controllers/states/registration_state.dart';
 import 'package:projectv/controllers/states/state.dart';
 import 'package:projectv/services/authentication/authentication.dart';
@@ -33,6 +35,14 @@ class Controller extends Cubit<AppState> {
 
   void showFeedState() {
     emit(FeedState());
+  }
+
+  void showProfileState() {
+    emit(ProfileState());
+  }
+
+  void showInboxState() {
+    emit(InboxState());
   }
 
 }

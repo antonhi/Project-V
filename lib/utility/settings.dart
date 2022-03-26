@@ -1,5 +1,5 @@
 class AppSettings {
 
-  static const int postsRefreshedPerRefresh = 10;
+  static const int postsRefreshedPerRefresh = 11;
 
 }
