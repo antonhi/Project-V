@@ -66,6 +66,9 @@ class Authentication {
       auth.createUserWithEmailAndPassword(email: email ?? '', password: password ?? '').then((userCredential) async {
         User? createdUser = userCredential.user;
         if (createdUser != null) {
+          await createdUser.updateDisplayName(username);
+          String? url = await controller!.storage.getURL();
+          print(url);
           AppUser appUser = AppUser(username: username);
           await appUser.addUser(controller!.database, createdUser.uid);
           controller!.cache.setUser(appUser);
@@ -74,7 +77,6 @@ class Authentication {
         }
       });
     } on FirebaseAuthException catch (e) {
-      print(e.code);
       switch (e.code) {
         case 'missing-email':
         case 'email-already-in-use':

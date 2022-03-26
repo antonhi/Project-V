@@ -23,6 +23,7 @@ class Controller extends Cubit<AppState> {
         super(LoginState()) {
     database.setController(this);
     authentication.setController(this);
+    storage.setController(this);
   }
 
   void showLoginState() {
@@ -34,7 +35,7 @@ class Controller extends Cubit<AppState> {
   }
 
   void showFeedState() {
-    emit(FeedState());
+    emit(FeedState(user: authentication.getUser()!));
   }
 
   void showProfileState() {
