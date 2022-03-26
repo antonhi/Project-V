@@ -1,10 +1,10 @@
 class AppErrors {
-  static const int loginFailureEmail = 0;
-  static const int loginFailurePassword = 1;
-  static const int loginFailure = 2;
-  static const int registrationFailureEmail = 3;
-  static const int registrationFailureUsername = 4;
-  static const int registrationFailure = 5;
-  static const int registrationFailurePassword = 6;
-  static const int registrationFailureNetwork = 7;
+  static const String loginFailureEmail = 'Email could not be found';
+  static const String loginFailurePassword = 'Password is incorrect';
+  static const String loginFailure = 'Login services are currently offline';
+  static const String registrationFailureEmail = 'Email is already taken or invalid';
+  static const String registrationFailureUsername = 'Username is invalid or already taken';
+  static const String registrationFailure = 'Registration services are currently offline';
+  static const String registrationFailurePassword = 'Password must contain number, special character, and 10 characters';
+  static const String registrationFailureNetwork = 'Could not establish network connection';
 }

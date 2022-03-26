@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:projectv/controllers/controllers/controller.dart';
 import 'package:projectv/controllers/routes/router.dart';
 import 'package:projectv/services/authentication/authentication.dart';
+import 'package:projectv/services/cache/cache.dart';
 import 'package:projectv/services/database/database.dart';
 import 'package:projectv/services/storage/storage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       home: BlocProvider<Controller>(
-        create: (context) => Controller(authentication: Authentication(), database: Database(), storage: Storage()),
+        create: (context) => Controller(authentication: Authentication(), database: Database(), storage: Storage(), cache: Cache()),
         child: Routes(),
       ),
     );

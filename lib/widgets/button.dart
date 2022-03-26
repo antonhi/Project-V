@@ -26,7 +26,7 @@ class AppButton extends StatelessWidget {
         child: Align(
           alignment: alignment,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: alignment == Alignment.centerLeft ? MainAxisAlignment.start : MainAxisAlignment.center,
             children: getComponents(),
           ),
         ),
@@ -36,7 +36,7 @@ class AppButton extends StatelessWidget {
 
   List<Widget> getComponents() {
     if (image == null) {
-      return [Text(text, style: TextStyle(fontSize: textSize, color: textColor, fontWeight: FontWeight.bold),)];
+      return [Text(text, style: TextStyle(fontSize: textSize, color: textColor, fontWeight: FontWeight.bold,),)];
     } else if (image != null && text == '') {
       return [image!];
     } else {

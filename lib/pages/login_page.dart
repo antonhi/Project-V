@@ -20,13 +20,21 @@ class LoginPage extends AppPage {
 class _LoginPageState extends State<LoginPage> {
 
   String? email, password, error;
-  late List<TextEditingController> controllers;
+  List<TextEditingController>? controllers;
+
+  @override
+  void initState() {
+    if (controllers == null) {
+      initializeControllers();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    populateTextFields();
     return BlocBuilder<Controller, AppState>(builder: (context, state) {
       if (state is LoginState) {
-        populateTextFields();
         return Scaffold(
           backgroundColor: AppColors.backgroundColor,
           body: Center(
@@ -36,12 +44,12 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 error == null ? const SizedBox(height: 0,) : AppError(error: error!),
                 const Image(
-                  image: AssetImage("images/vividlogo.png"),
+                  image: AssetImage('images/vividlogo.png'),
                   width: 75,
                   height: 75,
                 ),
                 const SizedBox(height: 40,),
-                AppForm(title: "Log In", fields: const ["Email", "Password"], controllers: controllers),
+                AppForm(title: 'Log In', fields: const ['Email', 'Password'], controllers: controllers!),
                 const SizedBox(height: 30,),
                 Container(
                   decoration: BoxDecoration(
@@ -54,10 +62,10 @@ class _LoginPageState extends State<LoginPage> {
                       AppButton(onTap: () {
                         BlocProvider.of<Controller>(context).showRegistrationState();
                       },
-                          backgroundColor: AppColors.backgroundColor,
+                          backgroundColor: AppColors.inputColor,
                           textColor: Colors.white,
                           textSize: 14,
-                          text: "Register",
+                          text: 'Register',
                           width: 100,
                           height: 50,
                           alignment: Alignment.center,
@@ -70,17 +78,18 @@ class _LoginPageState extends State<LoginPage> {
                           });
                         }
                       },
-                          backgroundColor: AppColors.inputColor,
-                          textColor: AppColors.accentColor,
+                          backgroundColor: AppColors.accentColor,
+                          textColor: Colors.white,
                           textSize: 14,
-                          text: "Submit",
+                          text: 'Submit',
                           width: 120,
                           height: 50,
                           alignment: Alignment.center,
                           image: null)
                     ],
                   ),
-                )
+                ),
+                const SizedBox(height: 20,)
               ],
             ),
           ),
@@ -93,9 +102,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void populateTextFields() {
+    if (controllers == null || controllers!.length != 2) return;
+    controllers![0].text = email ?? '';
+    controllers![1].text = password ?? '';
+  }
+
+  void initializeControllers() {
     controllers = List.generate(2, (_) => TextEditingController());
-    if (controllers.length != 2) return;
-    controllers[0].text = email ?? "";
-    controllers[1].text = password ?? "";
   }
 }

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:projectv/controllers/controllers/controller.dart';
-import 'package:projectv/services/error/authentication_error_handler.dart';
+import 'package:projectv/models/user.dart';
+import 'package:projectv/services/authentication/password.dart';
 import 'package:projectv/utility/errors.dart';
 
 class Authentication {
@@ -14,11 +15,21 @@ class Authentication {
     initiateUserChangesListener();
   }
 
+  void setController(Controller controller) {
+    this.controller = controller;
+  }
+
   void initiateUserChangesListener() {
-    auth.userChanges().listen((user) {
+    auth.userChanges().listen((user) async {
       if (controller != null) {
         this.user = user;
-        user == null ? controller!.showLoginState() : controller!.showRegistrationState();
+        if (user == null) {
+          controller!.showLoginState();
+        } else {
+          controller!.showFeedState();
+          AppUser? appUser = await AppUser.getAppUserFromUser(controller!.database, user);
+          controller!.cache.setUser(appUser);
+        }
       }
     });
   }
@@ -31,34 +42,51 @@ class Authentication {
     } on FirebaseAuthException catch (e) {
       print(e.code);
       switch (e.code) {
-        case "user-not-found":
-          return AuthenticationErrorHandler().getMessage(AppErrors.loginFailureEmail);
-        case "wrong-password":
-          return AuthenticationErrorHandler().getMessage(AppErrors.loginFailurePassword);
+        case 'user-not-found':
+          return AppErrors.loginFailureEmail;
+        case 'wrong-password':
+          return AppErrors.loginFailurePassword;
       }
     } catch (e) {
-      return AuthenticationErrorHandler().getMessage(AppErrors.loginFailure);
+      return AppErrors.loginFailure;
     }
     return null;
   }
 
   Future<String?> signUp(String? email, String? password, String? username) async {
+
+    if (!PasswordValidation.validate(password)) {
+      return AppErrors.registrationFailurePassword;
+    }
+    if (username == null) return AppErrors.registrationFailureUsername;
+    bool exists = await AppUser.userExists(controller!.database, username);
+    if (exists) return AppErrors.registrationFailureUsername;
+
     try {
-      await auth.createUserWithEmailAndPassword(email: email ?? '', password: password ?? '');
+      auth.createUserWithEmailAndPassword(email: email ?? '', password: password ?? '').then((userCredential) async {
+        User? createdUser = userCredential.user;
+        if (createdUser != null) {
+          AppUser appUser = AppUser(username: username);
+          await appUser.addUser(controller!.database, createdUser.uid);
+          controller!.cache.setUser(appUser);
+        } else {
+          return AppErrors.registrationFailure;
+        }
+      });
     } on FirebaseAuthException catch (e) {
       print(e.code);
       switch (e.code) {
         case 'missing-email':
         case 'email-already-in-use':
         case 'invalid-email':
-          return AuthenticationErrorHandler().getMessage(AppErrors.registrationFailureEmail);
+          return AppErrors.registrationFailureEmail;
         case 'weak-password':
-          return AuthenticationErrorHandler().getMessage(AppErrors.registrationFailurePassword);
+          return AppErrors.registrationFailurePassword;
         case 'network-request-failed':
-          return AuthenticationErrorHandler().getMessage(AppErrors.registrationFailureNetwork);
+          return AppErrors.registrationFailureNetwork;
       }
     } catch (e) {
-      return AuthenticationErrorHandler().getMessage(AppErrors.registrationFailure);
+      return AppErrors.registrationFailure;
     }
     return null;
   }
