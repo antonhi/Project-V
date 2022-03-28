@@ -20,20 +20,20 @@ class _AppNavigationBarState extends State<AppNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70,
+      height: 60,
       width: widget.width*0.9,
       decoration: BoxDecoration(
-          color: AppColors.inputColor.withOpacity(0.8),
-          borderRadius: BorderRadius.circular(35)
+          color: AppColors.inputColor.withOpacity(0.75),
+          borderRadius: BorderRadius.circular(30)
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          GestureDetector(child: Icon(Icons.play_arrow_rounded, color: widget.page == 1 ? AppColors.accentColor : Colors.white, size: widget.page == 1 ? 32 : 30,),
+          GestureDetector(child: Icon(Icons.play_arrow_rounded, color: widget.page == 1 ? AppColors.accentColor : Colors.white, size: widget.page == 1 ? 30 : 25,),
           onTap: () => BlocProvider.of<Controller>(context).showFeedState(),),
-          GestureDetector(child: Icon(Icons.person, color: widget.page == 2 ? AppColors.accentColor : Colors.white, size: widget.page == 2 ? 32 : 30,),
+          GestureDetector(child: Icon(Icons.person, color: widget.page == 2 ? AppColors.accentColor : Colors.white, size: widget.page == 2 ? 30 : 25,),
           onTap: () => BlocProvider.of<Controller>(context).showProfileState(),),
-          GestureDetector(child: Icon(Icons.mail_outline_rounded, color: widget.page == 3 ? AppColors.accentColor : Colors.white, size: widget.page == 3 ? 32 : 30,),
+          GestureDetector(child: Icon(Icons.mail_outline_rounded, color: widget.page == 3 ? AppColors.accentColor : Colors.white, size: widget.page == 3 ? 30 : 25,),
           onTap: () => BlocProvider.of<Controller>(context).showInboxState(),),
         ],
       ),

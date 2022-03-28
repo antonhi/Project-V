@@ -5,11 +5,11 @@ class AppButton extends StatelessWidget {
   final Color? backgroundColor, textColor;
   final String text;
   final Icon? image;
-  final double textSize, width, height;
+  final double textSize, height;
   final Alignment alignment;
   const AppButton({Key? key, required this.onTap,
   required this.backgroundColor, required this.textColor, required this.textSize,
-  required this.text, required this.width, required this.height, required this.alignment,
+  required this.text, required this.height, required this.alignment,
   required this.image}) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class AppButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: height,
-        width: width,
+        padding: const EdgeInsets.only(left: 20, right: 20),
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(height/2)

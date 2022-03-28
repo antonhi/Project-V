@@ -66,7 +66,6 @@ class _LoginPageState extends State<LoginPage> {
                           textColor: Colors.white,
                           textSize: 14,
                           text: 'Register',
-                          width: 100,
                           height: 50,
                           alignment: Alignment.center,
                           image: null,),
@@ -83,7 +82,6 @@ class _LoginPageState extends State<LoginPage> {
                           textColor: Colors.white,
                           textSize: 14,
                           text: 'Submit',
-                          width: 120,
                           height: 50,
                           alignment: Alignment.center,
                           image: null)

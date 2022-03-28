@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:projectv/controllers/states/feed_state.dart';
 import 'package:projectv/pages/page.dart';
+import 'package:projectv/widgets/feed/feed_recommended.dart';
 import 'package:projectv/widgets/navigation_bar.dart';
 import 'package:projectv/widgets/profile_picture.dart';
 import 'package:projectv/widgets/text/bolded_small_text.dart';
@@ -23,8 +24,16 @@ class FeedPage extends AppPage {
 class _FeedPageState extends State<FeedPage> {
 
   List<String> contentPages = ['Trending', 'Recommended', 'Following'];
+  List<Color> colorPages = [Colors.red, Colors.blue, Colors.pink];
   int index = 1;
-  
+  PageController? pageController;
+
+  @override
+  void initState() {
+    pageController ??= PageController(initialPage: 1);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double navigationWidth = MediaQuery.of(context).size.width;
@@ -62,29 +71,33 @@ class _FeedPageState extends State<FeedPage> {
                           SizedBox(
                             width: (navigationWidth-20)/3,
                             child: Align(alignment: Alignment.centerRight,child: ProfilePicture(size: 50, url: state.user.photoURL,)),
-                          )
+                          ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 5,),
                     SizedBox(
-                      height: 36,
+                      height: 20,
                       child: Center(
-                        child: Column(
-                          children: [
-                            BoldedSmallText(text: contentPages[index], color: AppColors.alternateTextColor),
-                            Spacer(),
-                            Wrap(spacing: 10, children: List.generate(3, (index) => Container(
-                              height: 10,
-                              width: 10,
-                              decoration: BoxDecoration(
-                                color: index == this.index ? AppColors.accentColor : AppColors.inputColor,
-                                borderRadius: BorderRadius.circular(5)
-                              ),
-                            )),)
-                          ],
-                        )
+                        child: Wrap(spacing: 10, children: List.generate(3, (index) => Container(
+                          height: 10,
+                          width: 10,
+                          decoration: BoxDecoration(
+                              color: index == this.index ? AppColors.accentColor : AppColors.inputColor,
+                              borderRadius: BorderRadius.circular(5)
+                          ),
+                        )),)
                       ),
+                    ),
+                    const SizedBox(height: 10,),
+                    Expanded(
+                      child: PageView.builder(controller: pageController, scrollDirection: Axis.horizontal, itemCount: 3, itemBuilder: (context, index) {
+                        return index == 1 ? FeedRecommended(width: navigationWidth-20,) : Container(decoration: BoxDecoration(color: colorPages[index]),);
+                      }, onPageChanged: (page) {
+                        setState(() {
+                          index = page;
+                        });
+                      },),
                     )
                   ],
                 ),
