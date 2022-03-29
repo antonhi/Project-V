@@ -6,7 +6,6 @@ import 'package:projectv/widgets/post/post_preview.dart';
 import 'package:projectv/widgets/search_bar.dart';
 import 'package:projectv/widgets/text/bolded_large_text.dart';
 import 'package:projectv/widgets/text/bolded_small_text.dart';
-import 'package:projectv/widgets/text/standard_text.dart';
 import 'package:projectv/widgets/user_preview.dart';
 
 import '../../utility/colors.dart';
@@ -49,7 +48,7 @@ class _FeedRecommendedState extends State<FeedRecommended> {
         ],
       ),
       const SizedBox(height: 30,),
-      PostPreview(post: Post(id: 'id', url: 'url', type: 'image', user: 'anton', title: 'Testing Title', description: 'This is a test of the post description'), width: widget.width),
+      PostPreview(post: Post(id: 'id', url: 'https://firebasestorage.googleapis.com/v0/b/projectv-cbc7a.appspot.com/o/videos%2Fdefault%2Fexample.mp4?alt=media&token=721c6796-14ae-4b40-827d-0f5ce134efcf', type: 'video', user: 'anton', title: 'Testing Title', description: 'This is a test of the post description'), width: widget.width),
       const SizedBox(height: 20,),
       SizedBox(
         height: 100,

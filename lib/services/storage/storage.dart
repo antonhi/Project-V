@@ -16,11 +16,12 @@ class Storage {
   Future<String?> getURL() async {
     String? url;
     try {
-      Reference reference = storage.ref().child('profilephotos/default/defaultprofilephoto.png');
+      Reference reference = storage.ref().child('videos/default/example.mp4');
       url = await reference.getDownloadURL();
     } on FirebaseException catch (e) {
       print(e);
     }
+    print(url);
     return url;
   }
 

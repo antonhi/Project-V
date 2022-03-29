@@ -72,8 +72,8 @@ class _PostPreviewState extends State<PostPreview> {
 
   Widget getPost() {
     if (widget.post.type == 'image') {
-      return Image(image: AssetImage('images/anime.jpg'), fit: BoxFit.cover,);
+      return const Image(image: AssetImage('images/anime.jpg'), fit: BoxFit.cover,);
     }
-    return PostVideo(url: widget.post.url);
+    return PostVideo(post: widget.post, width: (widget.width-40),);
   }
 }
