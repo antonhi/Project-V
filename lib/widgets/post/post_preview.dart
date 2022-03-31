@@ -11,14 +11,17 @@ class PostPreview extends StatefulWidget {
 
   final Post post;
   final double width;
+  final bool isInView;
 
-  const PostPreview({Key? key, required this.post, required this.width}) : super(key: key);
+  const PostPreview({Key? key, required this.post, required this.width, required this.isInView}) : super(key: key);
 
   @override
   State<PostPreview> createState() => _PostPreviewState();
 }
 
 class _PostPreviewState extends State<PostPreview> {
+
+  PostVideo? video;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +77,9 @@ class _PostPreviewState extends State<PostPreview> {
     if (widget.post.type == 'image') {
       return const Image(image: AssetImage('images/anime.jpg'), fit: BoxFit.cover,);
     }
-    return PostVideo(post: widget.post, width: (widget.width-40),);
+    video = PostVideo(post: widget.post, width: (widget.width-40), isInView: widget.isInView,);
+    return video!;
   }
+
+
 }

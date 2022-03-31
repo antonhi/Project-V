@@ -13,7 +13,7 @@ class ProfilePicture extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      child: CircleAvatar(backgroundColor: AppColors.inputColor, backgroundImage: NetworkImage(url ?? 'https://firebasestorage.googleapis.com/v0/b/projectv-cbc7a.appspot.com/o/profilephotos%2Fdefault%2Fdefaultprofilephoto.png?alt=media&token=27c8c140-4513-4515-83b5-393479675362'),),
+      child: const CircleAvatar(backgroundColor: AppColors.inputColor, backgroundImage: AssetImage('images/anime.jpg'),),
     );
     //return CircleAvatar(radius: size, backgroundColor: Colors.white,);
   }

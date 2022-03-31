@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:projectv/models/post.dart';
 import 'package:projectv/models/user.dart';
 import 'package:projectv/widgets/button.dart';
@@ -32,67 +33,76 @@ class _FeedRecommendedState extends State<FeedRecommended> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
-      SearchBar(controller: controller!, placeholder: 'search games, users, + more', height: 30),
-      const SizedBox(height: 30,),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const BoldedLargeText(text: 'Following', color: Colors.white),
-          Row(
-            children: [
-              BoldedSmallText(text: 'swipe left', color: AppColors.alternateTextColor),
-              Icon(Icons.chevron_right, color: AppColors.alternateTextColor,)
-            ],
-          ),
-        ],
-      ),
-      const SizedBox(height: 30,),
-      PostPreview(post: Post(id: 'id', url: 'https://firebasestorage.googleapis.com/v0/b/projectv-cbc7a.appspot.com/o/videos%2Fdefault%2Fexample.mp4?alt=media&token=721c6796-14ae-4b40-827d-0f5ce134efcf', type: 'video', user: 'anton', title: 'Testing Title', description: 'This is a test of the post description'), width: widget.width),
-      const SizedBox(height: 20,),
-      SizedBox(
-        height: 100,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: List.generate(16, (index) => index % 2 == 0 ? UserPreview(user: AppUser(username: 'Stevievee')) : SizedBox(width: 20,)),
-        ),
-      ),
-      const SizedBox(height: 20,),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: const [
-              Icon(Icons.chevron_left, color: AppColors.alternateTextColor,),
-              BoldedSmallText(text: 'swipe right', color: AppColors.alternateTextColor),
-            ],
-          ),
-          const BoldedLargeText(text: 'Trending', color: Colors.white),
-        ],
-      ),
-      const SizedBox(height: 10,),
-      SizedBox(
-        height: 50,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: List.generate(20, (index) => index % 2 == 0 ? AppButton(onTap: (){}, backgroundColor: AppColors.inputColor, textColor: Colors.white, textSize: 12, text: 'testing', height: 50, alignment: Alignment.center, image: null) : const SizedBox(width: 10,)),
-        ),
-      ),
-      const SizedBox(height: 10,),
-      Wrap(
-        direction: Axis.vertical,
-        spacing: 20,
-        children: List.generate(2, (_) => PostPreview(post: Post(id: 'id', url: 'url', type: 'image', user: 'anton'), width: widget.width),),
-      ),
-      const SizedBox(height: 20,),
-      const Center(child: BoldedLargeText(text: 'Recommended', color: Colors.white)),
-      const SizedBox(height: 20,),
-      Wrap(
-        direction: Axis.vertical,
-        spacing: 20,
-        children: List.generate(6, (_) => PostPreview(post: Post(id: 'id', url: 'url', type: 'image', user: 'anton'), width: widget.width),),
-      ),
-      const SizedBox(height: 65,)
-    ]);
+    List<Widget> components = getComponents();
+    return InViewNotifierList(builder: (context, index) {
+      return InViewNotifierWidget(id: '$index', builder: (BuildContext context, bool isInView, Widget? child) {
+        if (index == 4 || index == 12 || index == 13 || (index > 16 && index % 2 != 0)) {
+          return PostPreview(post: Post(id: 'id', url: 'url', type: 'video', user: 'user', title: 'Testing'), width: widget.width, isInView: isInView);
+        } else {
+          return components[index];
+        }
+      });
+    }, isInViewPortCondition: (double deltaTop, double deltaBottom, double vpHeight) {
+      return deltaTop < (0.4 * vpHeight) && deltaBottom > (0.4 * vpHeight);
+    }, itemCount: components.length,);
   }
+
+  List<Widget> getComponents() {
+    List<Widget> widgets = [];
+    widgets.add(SearchBar(controller: controller!, placeholder: 'search games, users, + more', height: 30));
+    widgets.add(const SizedBox(height: 20,));
+    widgets.add(Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const BoldedLargeText(text: 'Following', color: Colors.white),
+        Row(
+          children: [
+            BoldedSmallText(text: 'swipe left', color: AppColors.alternateTextColor),
+            Icon(Icons.chevron_right, color: AppColors.alternateTextColor,)
+          ],
+        ),
+      ],
+    ));
+    widgets.add(const SizedBox(height: 20,));
+    widgets.add(PostPreview(post: Post(id: 'id', url: 'url', type: 'video', user: 'anton'), width: widget.width, isInView: false,));
+    widgets.add(const SizedBox(height: 20,));
+    widgets.add(SizedBox(
+      height: 100,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: List.generate(16, (index) => index % 2 == 0 ? UserPreview(user: AppUser(username: 'Stevievee')) : SizedBox(width: 20,)),
+      ),
+    ));
+    widgets.add(const SizedBox(height: 20,));
+    widgets.add(Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: const [
+            Icon(Icons.chevron_left, color: AppColors.alternateTextColor,),
+            BoldedSmallText(text: 'swipe right', color: AppColors.alternateTextColor),
+          ],
+        ),
+        const BoldedLargeText(text: 'Trending', color: Colors.white),
+      ],
+    ));
+    widgets.add(const SizedBox(height: 10,));
+    widgets.add(SizedBox(
+      height: 50,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: List.generate(20, (index) => index % 2 == 0 ? AppButton(onTap: (){}, backgroundColor: AppColors.inputColor, textColor: Colors.white, textSize: 12, text: 'testing', height: 50, alignment: Alignment.center, image: null) : const SizedBox(width: 10,)),
+      ),
+    ));
+    widgets.add(const SizedBox(height: 10,));
+    widgets.add(Container());
+    widgets.add(Container());
+    widgets.add(const SizedBox(height: 20,));
+    widgets.add(const Center(child: BoldedLargeText(text: 'Recommended', color: Colors.white)));
+    widgets.add(const SizedBox(height: 20,));
+    List.generate(12, (_) => widgets.add(const SizedBox(height: 40,)));
+    widgets.add(const SizedBox(height: 65,));
+    return widgets;
+  }
+
 }
