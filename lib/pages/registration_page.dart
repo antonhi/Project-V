@@ -67,7 +67,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           textColor: Colors.white,
                           textSize: 14,
                           text: 'Login',
-                          width: 100,
                           height: 50,
                           alignment: Alignment.center,
                           image: null,),
@@ -87,7 +86,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         textColor: AppColors.accentColor,
                         textSize: 14,
                         text: '',
-                        width: 100,
                         height: 50,
                         alignment: Alignment.center,
                         image: page == 1 ? null : const Icon(Icons.arrow_back, size: 20, color: Colors.white,),),
@@ -115,7 +113,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           textColor: Colors.white,
                           textSize: 14,
                           text: page == 1 ? 'Next' : 'Submit',
-                          width: 100,
                           height: 50,
                           alignment: Alignment.center,
                           image: null,)
